@@ -20,7 +20,7 @@ print('''==================================================
 while True:
     pickcard = input("Do you want to play? Please enter y or n: ").lower()
     if pickcard == "y":
-        cards = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, "A"]
+        cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, "A"]
         dealer = [random.choice(cards), random.choice(cards)]
         dealorg = dealer.copy()
 
