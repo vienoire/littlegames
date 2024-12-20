@@ -20,11 +20,14 @@ print('''==================================================
 while True:
     pickcard = input("Do you want to play? Please enter y or n: ").lower()
     if pickcard == "y":
-        cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10, "A"]
+        cards = [2, 3, 4, 5, 6, 7, 8, 9, 10, "K", "Q", "J", "A"]
         dealer = [random.choice(cards), random.choice(cards)]
         dealorg = dealer.copy()
 
         def agame(list):
+            for x in range(2):
+                if list[x] in ["K", "J", "Q"]:
+                    list[x] = 10
             if list[0] == "A" and list[1] == "A":
                 list[0] = 1
                 list[1] = 11
@@ -51,7 +54,10 @@ while True:
         i = 2
         while deal < 17:
                 dealer.append(random.choice(cards))
-                dealorg = dealer.copy()
+                dealorg.append(dealer[i])
+                for h in range(i+1):
+                    if dealer[h] in ["K", "J", "Q"]:
+                        dealer[h] = 10
                 if dealer[i] == "A":
                     if deal + 11 > 21:
                         dealer[i] = 1
@@ -74,7 +80,10 @@ while True:
 
             if another == "y":
                 user.append(random.choice(cards))
-                userback = user.copy()
+                userback.append(user[a])
+                for k in range(a+1):
+                    if user[k] in ["K", "J", "Q"]:
+                        user[k] = 10
                 if user[a] == "A":
                     numa += 1
                     if numa == 3:
@@ -101,11 +110,11 @@ while True:
                     if score > deal:
                         print(f"Congrats, you won!🥳\nYour Cards: {userback}, Your Score: {score}\nDealer's Cards: {dealorg}, score: {deal}.")
                     elif score == deal:
-                        if (dealorg == ["A", 10] or dealorg == [10, "A"]) and (userback == ["A", 10] or userback == [10, "A"]):
+                        if (deal == 21 and len(dealer) == 2) and (score == 21 and len(user) == 2):
                             print(f"What are the chances! You both got a Blackjack, it's a push.\nYour Cards: {userback}, Your Score: {score}\nDealer's Cards: {dealorg}, score: {deal}.")
-                        elif dealorg == ["A", 10] or dealorg == [10, "A"]:
+                        elif deal == 21 and len(dealer) == 2:
                             print(f"You Lost. Dealer got a Blackjack.😔\nYour Cards: {userback}, Your Score: {score}\nDealer's Cards: {dealorg}, score: {deal}.")
-                        elif userback == ["A", 10] or userback == [10, "A"]:
+                        elif score == 21 and len(user) == 2:
                             print(f"You won with a Blackjack!🥳\nYour Cards: {userback}, Your Score: {score}\nDealer's Cards: {dealorg}, score: {deal}.")
                         else:
                             print(f"It's a push, noone wins!\nYour Cards: {userback}, Your Score: {score}\nDealer's Cards: {dealorg}, score: {deal}.")
@@ -123,5 +132,8 @@ while True:
 
     elif pickcard == "n":
         break
+    else:
+        print("Please enter y or n next time. ")
+
     else:
         print("Please enter y or n next time. ")
